@@ -1,56 +1,63 @@
-
 import { Line } from "react-chartjs-2";
+import PropTypes from 'prop-types';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
 } from "chart.js";
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 );
 
 const Chart = ({ arr = [], currency, days }) => {
-    const prices = [];
-    const date = [];
+  const prices = [];
+  const date = [];
 
-    for (let i = 0; i < arr.length; i++) {
-        if (days === "24h") date.push(new Date(arr[i][0]).toLocaleTimeString());
-        else date.push(new Date(arr[i][0]).toLocaleDateString());
-        prices.push(arr[i][1]);
-    }
+  for (let i = 0; i < arr.length; i++) {
+    if (days === "24h") date.push(new Date(arr[i][0]).toLocaleTimeString());
+    else date.push(new Date(arr[i][0]).toLocaleDateString());
+    prices.push(arr[i][1]);
+  }
 
-    const data = {
-        labels: date,
-        datasets: [
-            {
-                label: `Price in ${currency}`,
-                data: prices,
-                borderColor: "rgb(255,99,132)",
-                backgroundColor: "rgba(255,99,132,0.5)",
-            },
-        ],
-    };
+  const data = {
+    labels: date,
+    datasets: [
+      {
+        label: `Price in ${currency}`,
+        data: prices,
+        borderColor: "rgb(255,99,132)",
+        backgroundColor: "rgba(255,99,132,0.5)",
+      },
+    ],
+  };
 
-    return (
-        <Line
-            options={{
-                responsive: true,
-            }}
-            data={data}
-        />
-    );
+  return (
+    <Line
+      options={{
+        responsive: true,
+      }}
+      data={data}
+    />
+  );
 };
 
+Chart.propTypes = {
+    arr: PropTypes.array.isRequired,
+    currency: PropTypes.string.isRequired,
+    days: PropTypes.string.isRequired,
+  };
+  
 export default Chart;
+
