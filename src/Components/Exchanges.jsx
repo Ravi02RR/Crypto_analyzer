@@ -5,6 +5,7 @@ import { Container, HStack } from '@chakra-ui/react';
 import Loader from './Loader';
 import ExchangeCard from './ExchangeCard';
 import ErrorPage from './ErrorPage';
+import "../Components/black.css"
 
 const Exchanges = () => {
 
@@ -34,25 +35,29 @@ const Exchanges = () => {
   if (error) return <ErrorPage></ErrorPage>;
 
   return (
-    <Container maxW={"container.xl"}>
-      {loader ? (
-        <Loader></Loader>
-      ) : (
-        <>
-          <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
-            {exchanges.map((i) => (
-              <ExchangeCard
-                key={i.id}
-                name={i.name}
-                img={i.image}
-                rank={i.trust_score_rank}
-                url={i.url}
-              ></ExchangeCard>
-            ))}
-          </HStack>
-        </>
-      )}
-    </Container>
+    <div className="black">
+      <Container maxW={"container.xl"}>
+        {loader ? (
+          <Loader></Loader>
+        ) : (
+          <>
+            <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
+              {exchanges.map((i) => (
+                <ExchangeCard
+                  key={i.id}
+                  name={i.name}
+                  img={i.image}
+                  rank={i.trust_score_rank}
+                  url={i.url}
+                ></ExchangeCard>
+              ))}
+            </HStack>
+          </>
+        )}
+      </Container>
+
+    </div>
+
   )
 }
 

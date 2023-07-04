@@ -5,7 +5,7 @@ import { Button, Container, HStack, Radio, RadioGroup } from "@chakra-ui/react";
 import Loader from "./Loader";
 import ErrorPage from './ErrorPage';
 import CoinCard from "./coinCard";
-
+import "../Components/black.css"
 const Coins = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,48 +42,52 @@ const Coins = () => {
   if (error) return <ErrorPage />;
 
   return (
-    <Container maxW={"container.xl"}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <RadioGroup value={currency} onChange={setCurrency} p={"8"}>
-            <HStack spacing={"4"}>
-              <Radio value={"inr"}>₹</Radio>
-              <Radio value={"usd"}>$</Radio>
-              <Radio value={"eur"}>€</Radio>
+    <div className="black">
+      <Container maxW={"container.xl"}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <RadioGroup value={currency} onChange={setCurrency} p={"8"}>
+              <HStack spacing={"4"}>
+                <Radio value={"inr"}>₹</Radio>
+                <Radio value={"usd"}>$</Radio>
+                <Radio value={"eur"}>€</Radio>
+              </HStack>
+            </RadioGroup>
+
+            <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
+              {coins.map((i) => (
+                <CoinCard
+                  id={i.id}
+                  key={i.id}
+                  name={i.name}
+                  price={i.current_price}
+                  img={i.image}
+                  symbol={i.symbol}
+                  currencySymbol={currencySymbol}
+                />
+              ))}
             </HStack>
-          </RadioGroup>
 
-          <HStack wrap={"wrap"} justifyContent={"space-evenly"}>
-            {coins.map((i) => (
-              <CoinCard
-                id={i.id}
-                key={i.id}
-                name={i.name}
-                price={i.current_price}
-                img={i.image}
-                symbol={i.symbol}
-                currencySymbol={currencySymbol}
-              />
-            ))}
-          </HStack>
+            <HStack w={"full"} overflowX={"auto"} p={"8"}>
+              {btns.map((item, index) => (
+                <Button
+                  key={index}
+                  bgColor={"blackAlpha.900"}
+                  color={"white"}
+                  onClick={() => changePage(index + 1)}
+                >
+                  {index + 1}
+                </Button>
+              ))}
+            </HStack>
+          </>
+        )}
+      </Container>
 
-          <HStack w={"full"} overflowX={"auto"} p={"8"}>
-            {btns.map((item, index) => (
-              <Button
-                key={index}
-                bgColor={"blackAlpha.900"}
-                color={"white"}
-                onClick={() => changePage(index + 1)}
-              >
-                {index + 1}
-              </Button>
-            ))}
-          </HStack>
-        </>
-      )}
-    </Container>
+    </div>
+
   );
 };
 
